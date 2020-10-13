@@ -37,12 +37,70 @@ Run baco container.::
       --volume /etc/hosts:/etc/hosts \
       baco-os-client
 
-Put baco command in .bash_aliases if OS distro is Debian/Ubuntu.::
+Put baco/bacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
 
    $ vi ~/.bash_aliases
    alias baco="docker exec -it baco baco"
+   alias bacos="docker exec -it baco bash"
    $ source ~/.bash_aliases
 
 For centos/RHEL, put baco command in .bashrc
 (CentOS/RHEL ignores .bash_aliases.)
+
+baco command
+----------------
+
+Here is the help message of baco command.::
+
+   $ baco -h
+   USAGE: /usr/local/bin/baco {-h|-e|-r|-t|-v}
+   
+    -h --help        Display this help message.
+    -e --execute        Execute baco command.
+    -r --run            Run baco client.
+    -t --test           Run baco-test.sh script.
+    -v --version        Show openstack client versions.
+
+The -e option is just a wrapper of openstack command.::
+
+   $ baco -e server list -c Name -c Status
+   +------+--------+
+   | Name | Status |
+   +------+--------+
+   | test | ACTIVE |
+   +------+--------+
+
+Test
+-----
+
+There is a test script baco-test.sh in baco-os-client image.
+
+It creates network, router, vm, volume etc...
+
+To run a test::
+
+   $ baco --test
+   Creating private network...Done
+   Creating external network...Done
+   Creating router...Done
+   Creating image...Done
+   ...
+   Removing existing test VM...Done
+   Creating virtual machine...Done
+   Adding external ip to vm...Done
+   Removing existing test volume..Done
+   Creating volume...Done
+   Waiting for test_bfv volume availability...
+   Attaching volume to vm...Done
+   VM status
+   +------------------+------------------------------------------------+
+   | Field            | Value                                          |
+   +------------------+------------------------------------------------+
+   | addresses        | private-net=172.30.1.141, 192.168.22.214       |
+   | flavor           | m1.tiny (f86115a7-6f4d-44a5-9bfc-df269086d385) |
+   | image            | cirros (990eeda4-c88c-4ab2-8819-66dfc12511cd)  |
+   | name             | test                                           |
+   | status           | ACTIVE                                         |
+   | volumes_attached | id='8c6f79ec-931b-4faf-9368-eee8d5c317b2'      |
+   +------------------+------------------------------------------------+
 
