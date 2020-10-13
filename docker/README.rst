@@ -17,7 +17,7 @@ Edit client versions in build.sh.::
        ["OPENSTACK_VER"]="4.0.1"
    )
 
-The default version of clients is for openstack train release.
+The default version of clients is openstack train release.
 
 Build the image.::
 
