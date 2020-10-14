@@ -44,10 +44,10 @@ Put baco/bacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
    alias bacos="docker exec -it baco bash"
    $ source ~/.bash_aliases
 
-For centos/RHEL, put baco command in .bashrc
+For centos/RHEL, put baco command in .bashrc.
 (CentOS/RHEL ignores .bash_aliases.)
 
-baco command
+commands
 ----------------
 
 Here is the help message of baco command.::
@@ -70,10 +70,16 @@ The -e option is just a wrapper of openstack command.::
    | test | ACTIVE |
    +------+--------+
 
+If you want to go into baco container, run bacos.::
+
+   [clex@taco2-adm-001 ~]$ bacos
+   root@a5cc02a304c6:/# 
+
+
 Test
 -----
 
-There is a test script baco-test.sh in baco-os-client image.
+There is a simple test script baco-test.sh in baco-os-client image.
 
 It creates network, router, vm, volume etc...
 
