@@ -4,6 +4,7 @@ ARG     GLANCE_VER
 ARG     KEYSTONE_VER
 ARG     NEUTRON_VER
 ARG     NOVA_VER
+ARG     MASAKARI_VER
 ARG     OPENSTACK_VER
 ENV     TINI_VERSION v0.19.0
 ENV     CIRROS_VERSION 0.5.1
@@ -19,6 +20,7 @@ RUN     apt update && \
             python-keystoneclient==$KEYSTONE_VER \
             python-neutronclient==$NEUTRON_VER \
             python-novaclient==$NOVA_VER \
+            python-masakariclient==$MASAKARI_VER \
             python-openstackclient==$OPENSTACK_VER && \
         chmod +x /tini && \
         echo $CIRROS_VERSION > /CIRROS_VERSION

@@ -14,6 +14,7 @@ Edit client versions in build.sh.::
        ["KEYSTONE_VER"]="3.21.0"
        ["NEUTRON_VER"]="6.14.0"
        ["NOVA_VER"]="15.1.1"
+       ["MASAKARI_VER"]="5.3.0"
        ["OPENSTACK_VER"]="4.0.1"
    )
 
