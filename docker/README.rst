@@ -44,8 +44,8 @@ Run tacos container.::
 Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
 
    $ vi ~/.bash_aliases
-   alias taco="docker exec -it jijisa/taco taco"
-   alias tacos="docker exec -it jijisa/taco bash"
+   alias taco="docker exec -it tacos taco"
+   alias tacos="docker exec -it tacos bash"
    $ source ~/.bash_aliases
 
 For centos/RHEL, put the above aliases in .bashrc.
