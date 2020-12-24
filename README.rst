@@ -1,10 +1,9 @@
-baco-os-client
-================
+TACOS
+=====
 
-This is a container-based OpenStack client for BACO platform.
+This is a container-based OpenStack client shell for TACO platform.
 
-BACO is (SK)Broadband All Container Orchestrator.
+TACOS == TACO Shell
 
 To build a container image, go to docker/README.rst.
-
 

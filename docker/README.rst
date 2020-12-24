@@ -1,10 +1,13 @@
-baco-os-client
+TACOS 
 ==================
 
-This is a baco openstack client.
+This is a TACO Shell for openstack.
 
-Build
--------
+Build (Optional)
+-------------------
+
+There is a TACOS image(jijisa/tacos) in docker hub but if you want to build
+it yourself, do the following.
 
 Edit client versions in build.sh.::
 
@@ -18,75 +21,75 @@ Edit client versions in build.sh.::
        ["OPENSTACK_VER"]="4.0.1"
    )
 
-The default version of clients is openstack train release.
+The default versions of clients are openstack train release.
 
 Build the image.::
 
    $ ./build.sh
 
-
 Run
 -----
 
-The environment variable file for openstack is .adminrc in your home directory.
+Assume the environment variable file for openstack is .adminrc 
+in your home directory.
 The file /etc/hosts should have the entry for identity service host.
 
-Run baco container.::
+Run tacos container.::
 
-   docker run --detach --name baco \
+   docker run --detach --name tacos \
       --env-file ~/.adminrc \
       --volume /etc/hosts:/etc/hosts \
-      baco-os-client
+      jijisa/tacos
 
-Put baco/bacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
+Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
 
    $ vi ~/.bash_aliases
-   alias baco="docker exec -it baco baco"
-   alias bacos="docker exec -it baco bash"
+   alias taco="docker exec -it jijisa/taco taco"
+   alias tacos="docker exec -it jijisa/taco bash"
    $ source ~/.bash_aliases
 
-For centos/RHEL, put baco command in .bashrc.
+For centos/RHEL, put the above aliases in .bashrc.
 (CentOS/RHEL ignores .bash_aliases.)
 
 commands
-----------------
+----------
 
-Here is the help message of baco command.::
+Here is the help message of taco command.::
 
-   $ baco -h
-   USAGE: /usr/local/bin/baco {-h|-e|-r|-t|-v}
+   $ taco -h
+   USAGE: /usr/local/bin/taco {-h|-e|-r|-t|-v}
    
     -h --help        Display this help message.
-    -e --execute        Execute baco command.
-    -r --run            Run baco client.
-    -t --test           Run baco-test.sh script.
+    -e --execute        Execute taco command.
+    -r --run            Run taco client.
+    -t --test           Run taco-test.sh script.
     -v --version        Show openstack client versions.
 
 The -e option is just a wrapper of openstack command.::
 
-   $ baco -e server list -c Name -c Status
+   $ taco -e server list -c Name -c Status
    +------+--------+
    | Name | Status |
    +------+--------+
    | test | ACTIVE |
    +------+--------+
 
-If you want to go into baco container, run bacos.::
+If you want to go into taco container shell, run tacos.::
 
-   [clex@taco2-adm-001 ~]$ bacos
+   [clex@taco2-adm-001 ~]$ tacos
    root@a5cc02a304c6:/# 
 
 
 Test
 -----
 
-There is a simple test script baco-test.sh in baco-os-client image.
+There is a simple OpenStack test script taco-test.sh.
 
-It creates network, router, vm, volume etc...
+It creates network, router, vm, volume, etc...
 
 To run a test::
 
-   $ baco --test
+   $ taco --test
    Creating private network...Done
    Creating external network...Done
    Creating router...Done

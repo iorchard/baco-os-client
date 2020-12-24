@@ -4,7 +4,7 @@ set -e -o pipefail
 
 get_cirros_image () {
     # Deprecated!!! Not used anymore.
-    # baco-os-client image already have the image (/cirros.img)
+    # tacos image already has the image (/cirros.img)
     local rel_url="http://download.cirros-cloud.net/version/released"
     IMG="/cirros.img"
 

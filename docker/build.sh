@@ -14,8 +14,8 @@ ver=(
     ["OPENSTACK_VER"]="4.0.1"
 )
 
-# build baco-os-client with build args
+# build jijisa/tacos with build args
 
 docker build \
     $(for k in ${!ver[@]};do echo -n "--build-arg $k=${ver[$k]} ";done) \
-    -t baco-os-client .
+    -t jijisa/tacos .

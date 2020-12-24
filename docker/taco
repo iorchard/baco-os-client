@@ -1,11 +1,11 @@
 #!/bin/bash
-# baco client
+# taco client
 set -e -o pipefail
 
-execute_baco () {
+execute_taco () {
     openstack "$@"
 }
-run_baco () {
+run_taco () {
     # check if client can reach each openstack service.
     declare -A clients
     clients=(
@@ -28,19 +28,19 @@ run_baco () {
         sleep 30
     done
 }
-test_baco () {
+test_taco () {
     # Get cirros image first if not found.
     #v=$(curl -s http://download.cirros-cloud.net/version/released)
     #if [ ! -f /usr/local/bin/cirros-${v}-x86_64-disk.img ]; then
     #    curl -sLo /usr/local/bin/cirros-${v}-x86_64-disk.img \
     #        http://download.cirros-cloud.net/${v}/cirros-${v}-x86_64-disk.img
     #fi
-    # Run baco-test.sh
-    /usr/local/bin/baco-test.sh
+    # Run taco-test.sh
+    /usr/local/bin/taco-test.sh
 }
-version_baco () {
+version_taco () {
     declare -a clients
-    clients=("cinder" "glance" "neutron" "nova" "openstack")
+    clients=("cinder" "glance" "neutron" "nova" "masakari" "openstack")
     header="%-10s\t%-10s"
     printf "$header\n" "Client" "Version"
     printf "=%.0s" {1..30}
@@ -53,9 +53,9 @@ USAGE () {
     echo "USAGE: $0 {-h|-e|-r|-t|-v}" 1>&2
     echo ""
     echo " -h --help        Display this help message."
-    echo " -e --execute        Execute baco command."
-    echo " -r --run            Run baco client."
-    echo " -t --test           Run baco-test.sh script."
+    echo " -e --execute        Execute taco command."
+    echo " -r --run            Run taco client."
+    echo " -t --test           Run taco-test.sh script."
     echo " -v --version        Show openstack client versions."
 }
 if [ $# -lt 1 ]; then
@@ -70,7 +70,7 @@ while true
 do
     case "$OPT" in
         -e | --execute)
-            execute_baco "$@"
+            execute_taco "$@"
             break
             ;;
         -h | --help)
@@ -78,15 +78,15 @@ do
             break
             ;;
         -r | --run)
-            run_baco
+            run_taco
             break
             ;;
         -t | --test)
-            test_baco
+            test_taco
             break
             ;;
         -v | --version)
-            version_baco
+            version_taco
             break
             ;;
         *)
