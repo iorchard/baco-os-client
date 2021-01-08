@@ -13,7 +13,8 @@ ADD     http://download.cirros-cloud.net/${CIRROS_VERSION}/cirros-${CIRROS_VERSI
 COPY    taco taco-test.sh /usr/local/bin/
 RUN     apt update && \
         DEBIAN_FRONTEND=noninteractive \
-            apt install -y python3 python3-pip curl less watch vim-tiny && \
+            apt install -y python3 python3-pip curl less watch vim-tiny \
+            mariadb-client rabbitmq-server && \
         pip3 install --no-cache-dir \
             python-cinderclient==$CINDER_VER \
             python-glanceclient==$GLANCE_VER \

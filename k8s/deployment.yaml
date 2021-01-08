@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tacos
+  namespace: openstack
+spec:
+  selector:
+    matchLabels:
+      application: tacos
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        application: tacos
+    spec:
+      containers:
+      - name: tacos
+        image: jijisa/tacos
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: tacos-env
+        volumeMounts:
+        - mountPath: /etc/hosts
+          name: etchosts
+          readOnly: true
+      volumes:
+      - name: etchosts
+        hostPath:
+          path: /etc/hosts
+          type: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        openstack-control-plane: enabled
+      restartPolicy: Always

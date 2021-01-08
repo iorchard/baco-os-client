@@ -2,6 +2,15 @@
 # taco client
 set -e -o pipefail
 
+connect_db () {
+    if [[ -z "${MARIADB_SERVICE_HOST}" ]]; then
+        echo "Error) No MARIADB_SERVICE_HOST exists."
+        echo "Are you running TACOS as a docker container?"
+        echo "You can connect to DB only when running TACOS in kubernetes."
+    else
+        mysql -h mariadb -u root -p 
+    fi
+}
 execute_taco () {
     openstack "$@"
 }
@@ -46,13 +55,16 @@ version_taco () {
     printf "=%.0s" {1..30}
     echo
     for c in ${clients[@]}; do
-        printf "$header\n" "$c" "$($c --version 2>/dev/null)"
+        [ x"$c" != x"masakari" ] && ver="--version" || ver="--masakari-api-version"
+            
+        printf "$header\n" "$c" "$($c $ver 2>/dev/null)"
     done
 }
 USAGE () {
     echo "USAGE: $0 {-h|-e|-r|-t|-v}" 1>&2
     echo ""
     echo " -h --help        Display this help message."
+    echo " -d --database       Connect to openstack database."
     echo " -e --execute        Execute taco command."
     echo " -r --run            Run taco client."
     echo " -t --test           Run taco-test.sh script."
@@ -69,6 +81,10 @@ shift
 while true
 do
     case "$OPT" in
+        -d | --database)
+            connect_db
+            break
+            ;;
         -e | --execute)
             execute_taco "$@"
             break

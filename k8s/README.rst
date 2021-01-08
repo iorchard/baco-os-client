@@ -1,5 +1,5 @@
-TACOS for docker
-==================
+TACOS for kubernetes
+=======================
 
 This is a TACO Shell for openstack.
 
@@ -7,25 +7,7 @@ Build (Optional)
 -------------------
 
 There is a TACOS image(jijisa/tacos) in docker hub but if you want to build
-it yourself, do the following.
-
-Edit client versions in build.sh.::
-
-   ver=(
-       ["CINDER_VER"]="5.0.0"
-       ["GLANCE_VER"]="2.17.0"
-       ["KEYSTONE_VER"]="3.21.0"
-       ["NEUTRON_VER"]="6.14.0"
-       ["NOVA_VER"]="15.1.1"
-       ["MASAKARI_VER"]="5.3.0"
-       ["OPENSTACK_VER"]="4.0.1"
-   )
-
-The default versions of clients are openstack train release.
-
-Build the image.::
-
-   $ ./build.sh
+it yourself, read docker/README.rst.
 
 Run
 -----
@@ -34,18 +16,24 @@ Assume the environment variable file for openstack is .adminrc
 in your home directory.
 The file /etc/hosts should have the entry for identity service host.
 
-Run tacos container.::
+Create a configmap from .adminrc.::
 
-   docker run --detach --name tacos \
-      --env-file ~/.adminrc \
-      --volume /etc/hosts:/etc/hosts \
-      jijisa/tacos
+   $ kubectl create configmap tacos-env \
+      --from-env-file=$HOME/.adminrc -n openstack
+
+Run deployment.yaml manifest.::
+
+   $ kubectl apply -f deployment.yaml
 
 Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
 
    $ vi ~/.bash_aliases
-   alias taco="docker exec -it tacos taco"
-   alias tacos="docker exec -it tacos bash"
+   alias taco="kubectl -n openstack exec -t $(kubectl -n openstack get po \
+      -l application=tacos \
+      -o jsonpath='{.items[0].metadata.name}') -- taco"
+   alias tacos="kubectl -n openstack exec -t $(kubectl -n openstack get po \
+      -l application=tacos \
+      -o jsonpath='{.items[0].metadata.name}') -- bash"
    $ source ~/.bash_aliases
 
 For centos/RHEL, put the above aliases in .bashrc.
