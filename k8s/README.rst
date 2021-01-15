@@ -31,7 +31,7 @@ Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
    alias taco="kubectl -n openstack exec -it $(kubectl -n openstack get po \
       -l application=tacos \
       -o jsonpath='{.items[0].metadata.name}') -- taco"
-   alias tacos="kubectl -n openstack exec -t $(kubectl -n openstack get po \
+   alias tacos="kubectl -n openstack exec -it $(kubectl -n openstack get po \
       -l application=tacos \
       -o jsonpath='{.items[0].metadata.name}') -- bash"
    $ source ~/.bash_aliases
