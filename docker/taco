@@ -61,9 +61,9 @@ version_taco () {
     done
 }
 USAGE () {
-    echo "USAGE: $0 {-h|-e|-r|-t|-v}" 1>&2
+    echo "USAGE: $0 {-h|-d|-e|-r|-t|-v}" 1>&2
     echo ""
-    echo " -h --help        Display this help message."
+    echo " -h --help           Display this help message."
     echo " -d --database       Connect to openstack database."
     echo " -e --execute        Execute taco command."
     echo " -r --run            Run taco client."

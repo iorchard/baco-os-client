@@ -28,7 +28,7 @@ get_cirros_image () {
 ask_public_net_settings () {
     
     while true; do
-        read -p 'Type the provider network address (e.g. 192.168.22.0): ' PN
+        read -p 'Type the provider network address (e.g. 192.168.22.0/24): ' PN
         # check if PN has the right format.
         if grep -P -q  "^\d+\.\d+\.\d+.\d+\/\d" <<<"$PN"; then
             echo "Okay. I got the provider network address: $PN"
@@ -40,7 +40,8 @@ ask_public_net_settings () {
     while true; do
         read -p 'The first IP address to allocate (e.g. 192.168.22.100): ' FIP
         # check if FIP is in PN range.
-        if [ "$FIP" =~ "$PN" ];then
+        FIP2=$(echo $FIP|cut -d'.' -f1,2,3)
+        if [[ "$PN" =~ "$FIP2" ]];then
             echo "Okay. I got the first address in PN pool: $FIP"
             break;
         fi
@@ -50,12 +51,15 @@ ask_public_net_settings () {
     while true; do
         read -p 'The last IP address to allocate (e.g. 192.168.22.200): ' LIP
         # check if LIP is in PN range.
-        if [ "$FIP" =~ "$PN" ];then
+        LIP2=$(echo $LIP|cut -d'.' -f1,2,3)
+        if [[ "$PN" =~ "$LIP2" ]];then
             # check if LIP is bigger than FIP
+            OLDIFS=$IFS
             IFS='.'
             l=($LIP)
             f=($FIP)
-            if [ $l[3] -gt $f[3] ]; then
+            IFS=$OLDIFS
+            if [[ ${l[3]} -gt ${f[3]} ]]; then
                 echo "Okay. I got the last address in PN pool: $LIP"
                 break;
             fi
@@ -85,7 +89,7 @@ if ! openstack network show public-net >/dev/null 2>&1; then
         --provider-physical-network external \
         public-net
     openstack subnet create --network public-net \
-        --subnet-range ${PN}/24 \
+        --subnet-range ${PN} \
         --allocation-pool start=${FIP},end=${LIP} \
         --dns-nameserver 8.8.8.8 public-subnet
 fi
