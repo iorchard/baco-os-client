@@ -14,7 +14,7 @@ COPY    taco taco-test.sh /usr/local/bin/
 RUN     apt update && \
         DEBIAN_FRONTEND=noninteractive \
             apt install -y python3 python3-pip curl less watch vim-tiny \
-            mariadb-client rabbitmq-server && \
+            mariadb-client rabbitmq-server dnsutils iputils-ping && \
         pip3 install --no-cache-dir \
             python-cinderclient==$CINDER_VER \
             python-glanceclient==$GLANCE_VER \
@@ -24,7 +24,9 @@ RUN     apt update && \
             python-masakariclient==$MASAKARI_VER \
             python-openstackclient==$OPENSTACK_VER && \
         chmod +x /tini && \
-        echo $CIRROS_VERSION > /CIRROS_VERSION
+        echo $CIRROS_VERSION > /CIRROS_VERSION && \
+        echo openstack-cookie > /var/lib/rabbitmq/.erlang.cookie && \
+        chmod 0600 /var/lib/rabbitmq/.erlang.cookie
 
 ENTRYPOINT  ["/tini", "--", "/usr/local/bin/taco"]
 CMD         ["--run"]
