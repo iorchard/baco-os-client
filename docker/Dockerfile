@@ -24,9 +24,7 @@ RUN     apt update && \
             python-masakariclient==$MASAKARI_VER \
             python-openstackclient==$OPENSTACK_VER && \
         chmod +x /tini && \
-        echo $CIRROS_VERSION > /CIRROS_VERSION && \
-        echo openstack-cookie > /var/lib/rabbitmq/.erlang.cookie && \
-        chmod 0600 /var/lib/rabbitmq/.erlang.cookie
+        echo $CIRROS_VERSION > /CIRROS_VERSION
 
 ENTRYPOINT  ["/tini", "--", "/usr/local/bin/taco"]
 CMD         ["--run"]

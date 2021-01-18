@@ -22,6 +22,11 @@ spec:
       - name: tacos
         image: jijisa/tacos
         imagePullPolicy: IfNotPresent
+        env:
+        - name: RABBITMQ_ERLANG_COOKIE
+          value: "openstack-cookie"
+        - name: RABBITMQ_USE_LONGNAME
+          value: true
         envFrom:
         - configMapRef:
             name: tacos-env
