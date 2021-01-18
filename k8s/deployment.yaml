@@ -26,7 +26,7 @@ spec:
         - name: RABBITMQ_ERLANG_COOKIE
           value: "openstack-cookie"
         - name: RABBITMQ_USE_LONGNAME
-          value: true
+          value: "true"
         envFrom:
         - configMapRef:
             name: tacos-env
