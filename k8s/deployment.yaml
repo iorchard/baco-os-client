@@ -18,10 +18,11 @@ spec:
       labels:
         application: tacos
     spec:
+      serviceAccountName: tacos
       containers:
       - name: tacos
         image: jijisa/tacos
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: RABBITMQ_ERLANG_COOKIE
           value: "openstack-cookie"
@@ -29,7 +30,7 @@ spec:
           value: "true"
         envFrom:
         - configMapRef:
-            name: tacos-env
+            name: tacos
         volumeMounts:
         - mountPath: /etc/hosts
           name: etchosts
@@ -43,3 +44,4 @@ spec:
       nodeSelector:
         openstack-control-plane: enabled
       restartPolicy: Always
+...

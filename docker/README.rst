@@ -39,6 +39,7 @@ Run tacos container.::
    docker run --detach --name tacos \
       --env-file ~/.adminrc \
       --volume /etc/hosts:/etc/hosts \
+      --volume ~/.kube:/root/.kube \
       jijisa/tacos
 
 Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::

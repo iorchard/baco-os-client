@@ -18,7 +18,7 @@ The file /etc/hosts should have the entry for identity service host.
 
 Create a configmap from .adminrc.::
 
-   $ kubectl create configmap tacos-env \
+   $ kubectl create configmap tacos \
       --from-env-file=$HOME/.adminrc -n openstack
 
 Run deployment.yaml manifest.::
