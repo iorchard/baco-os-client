@@ -21,9 +21,9 @@ Create a configmap from .adminrc.::
    $ kubectl create configmap tacos \
       --from-env-file=$HOME/.adminrc -n openstack
 
-Run deployment.yaml manifest.::
+Apply {deployment,cluster_role_binding,service_account}.yaml manifest.::
 
-   $ kubectl apply -f deployment.yaml
+   $ kubectl apply -f /path/to/tacos/k8s
 
 Put taco/tacos command in .bash_aliases if OS distro is Debian/Ubuntu.::
 
@@ -47,7 +47,8 @@ Here is the help message of taco command.::
    $ taco -h
    USAGE: /usr/local/bin/taco {-h|-e|-r|-t|-v}
    
-    -h --help        Display this help message.
+    -h --help           Display this help message.
+    -d --database       Connect to openstack database.
     -e --execute        Execute taco command.
     -r --run            Run taco client.
     -t --test           Run taco-test.sh script.
@@ -64,8 +65,22 @@ The -e option is just a wrapper of openstack command.::
 
 If you want to go into taco container shell, run tacos.::
 
-   [clex@taco2-adm-001 ~]$ tacos
+   $ tacos
    root@a5cc02a304c6:/# 
+
+If you want to connect to OpenStack mariadb, run taco with -d option.::
+
+   $ taco -d
+   Enter password: 
+   Welcome to the MariaDB monitor.  Commands end with ; or \g.
+   Your MariaDB connection id is 400723
+   Server version: 10.2.31-MariaDB-1:10.2.31+maria~bionic mariadb.org binary distribution
+   
+   Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+   
+   Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+   
+   MariaDB [(none)]>
 
 
 Test
