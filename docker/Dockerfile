@@ -16,7 +16,8 @@ COPY    taco taco-test.sh /usr/local/bin/
 RUN     apt update && \
         DEBIAN_FRONTEND=noninteractive \
             apt install -y python3 python3-pip curl less watch vim-tiny \
-            mariadb-client rabbitmq-server dnsutils iputils-ping && \
+            mariadb-client rabbitmq-server dnsutils iputils-ping \
+            rustc libssl-dev && \
         pip3 install --no-cache-dir \
             python-cinderclient==$CINDER_VER \
             python-glanceclient==$GLANCE_VER \
