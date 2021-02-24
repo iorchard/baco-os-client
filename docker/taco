@@ -47,17 +47,7 @@ test_taco () {
     /usr/local/bin/taco-test.sh
 }
 version_taco () {
-    declare -a clients
-    clients=("cinder" "glance" "neutron" "nova" "masakari" "openstack")
-    header="%-10s\t%-10s"
-    printf "$header\n" "Client" "Version"
-    printf "=%.0s" {1..30}
-    echo
-    for c in ${clients[@]}; do
-        [ x"$c" != x"masakari" ] && ver="--version" || ver="--masakari-api-version"
-            
-        printf "$header\n" "$c" "$($c $ver 2>/dev/null)"
-    done
+    openstack module list
 }
 USAGE () {
     echo "USAGE: $0 {-h|-d|-e|-r|-t|-v}" 1>&2
