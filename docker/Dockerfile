@@ -25,7 +25,8 @@ RUN     apt update && \
             python-neutronclient==$NEUTRON_VER \
             python-novaclient==$NOVA_VER \
             python-masakariclient==$MASAKARI_VER \
-            python-openstackclient==$OPENSTACK_VER && \
+            python-openstackclient==$OPENSTACK_VER \
+            secretstorage==3.3.1 && \
         chmod +x /tini /usr/local/bin/kubectl && \
         echo $CIRROS_VERSION > /CIRROS_VERSION
 

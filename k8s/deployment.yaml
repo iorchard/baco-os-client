@@ -32,17 +32,10 @@ spec:
         - configMapRef:
             name: tacos
         volumeMounts:
-        - mountPath: /etc/hosts
-          name: etchosts
-          readOnly: true
         - mountPath: /etc/localtime
           name: etclocaltime
           readOnly: true
       volumes:
-      - name: etchosts
-        hostPath:
-          path: /etc/hosts
-          type: File
       - name: etclocaltime
         hostPath:
           path: /etc/localtime
